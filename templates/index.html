@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>systime | Post-Self</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://post-self.ink/css/main.css" />
+
+        <link rel="stylesheet" type="text/css" href="https://post-self.ink/css/post-self.css" />
+
+        <meta name="viewport" content="width=device-width" />
+    </head>
+    <body class="dark-mode"><header>
+    <button class="theme-toggle" title="Toggle light/dark theme"></button>
+    <script src="/js/theme.js"></script>
+    <h1><a href="/">Post-Self</a></h1>
+    <nav>
+    <ul>
+        <li>
+            <details>
+                <summary>Books</summary>
+                <ul>
+                    <li><a href="/cycle">The Post-Self Cycle:</a>
+                        <ul>
+                            <li><a href="https://qoheleth.post-self.ink" target="_blank"><em>Qoheleth</em></a></li>
+                            <li><a href="https://toledot.post-self.ink" target="_blank"><em>Toledot</em></a></li>
+                            <li><a href="https://neviim.post-self.ink" target="_blank"><em>Nevi'im</em></a></li>
+                            <li><a href="https://mitzvot.post-self.ink" target="_blank"><em>Mitzvot</em></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/stories-of-restoration">Stories of Restoration:</a>
+                        <ul>
+                            <li><a href="https://marsh.post-self.ink" target="_blank"><em>Marsh</em></a></li>
+                            <li><a href="https://idumea.post-self.ink" target="_blank"><em>Idumea</em></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://clade.post-self.ink"><em>Clade</em></a></li>
+                    <li><a href="https://jessfluf.itch.io/unintended-tendencies" target="_blank"><em>Unintended Tendencies</em></a></li>
+                    <li><a href="https://motes-played.post-self.ink" target="_blank"><em>Motes Played</em></a></li>
+                    <li><a href="https://ask.post-self.ink" target="_blank"><em>Ask. — An Odist Q&A</em></a></li>
+                    <li><a href="/stories">Additional stories...</a></li>
+                </ul>
+            </details>
+        </li>
+        <li><a href="/stories">Stories</a></li>
+        
+        <li><a href="https://wiki.post-self.ink" target="_blank">Wiki</a></li>
+        <li><a href="/extras">Extras</a></li>
+        <li><a href="/about">About</a></li>
+    </ul>
+</nav>
+
+</header>
+<div id="content">
+        <main id="main">
+            <input type="text" id="systime" /> <input type="button" id="convert" value="Convert systime..." />
+            <div id="output" />
+        </main>
+        <footer><p>&copy; <a href=""></a> The Post-Self authors 2020 — 2025</p></footer>
+        <script type="text/javascript">
+            document.getElementById('convert').addEventListener("click", (ev) => {
+                fetch(`/api/1/systime/${document.getElementById('systime').value}`)
+                    .then((response) => {
+                        if (!response.ok) {
+                            document.getElementById('output').innerHTML = `Error converting systime`;
+                            throw new Error(response.status);
+                        }
+                        return response.json();
+                    })
+                    .then((json) => {
+                        document.getElementById('output').innerHTML = `
+                        <dl>
+                            <dt>Systime</dt>
+                            <dd>${json.systime.string}</dd>
+                            <dt>Gregorian</dt>
+                            <dd>${json.gregorian.string}</dd>
+                            <dt>Hebrew</dt>
+                            <dd>${json.hebrew.string}</dd>
+                        </dl>`;
+                    });
+            });
+        </script>
+    </body>
+</html>
