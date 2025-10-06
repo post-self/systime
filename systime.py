@@ -25,7 +25,7 @@ class Systime:
     def from_date(cls, d: date):
         td = d - date(year=d.year, month=1, day=1)
         year = d.year - SYSTIME_START
-        return cls(year=year, day=td.days)
+        return cls(year=year, day=td.days + 1)
 
     @classmethod
     def from_datetime(cls, d: datetime):
@@ -51,7 +51,7 @@ class Systime:
         return cls(year=yearnum, day=daynum, time=timenum)
 
     def to_date(self) -> date:
-        return date(self.year + SYSTIME_START, 1, 1) + timedelta(days=self.day)
+        return date(self.year + SYSTIME_START, 1, 1) + timedelta(days=self.day - 1)
 
     def to_datetime(self) -> datetime:
         if self.time is None:
