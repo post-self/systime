@@ -12,6 +12,16 @@ from pyluach import dates
 from systime import Systime
 
 
+HOLIDAY_REPLACEMENTS = {
+    'Succos': 'Sukkot',
+    'Shmini Atzeres': 'Shemini Atzeret',
+    'Simchas Torah': 'Simchat Torah',
+    'Chanuka': 'Hanukkah',
+    'Shavuos': 'Shavuot',
+    'Taanis Esther': 'Taanit Esther',
+}
+
+
 app = Flask('systime')
 
 @app.route('/')
@@ -59,9 +69,9 @@ def from_date(date_str):
             'year': h.year,
             'month': h.month,
             'day': h.day,
-            'fast': h.fast_day(),
-            'festival': h.festival(),
-            'holiday': h.holiday(),
+            'fast': HOLIDAY_REPLACEMENTS.get(h.fast_day(), h.fast_day()),
+            'festival': HOLIDAY_REPLACEMENTS.get(h.festival(), h.festival()),
+            'holiday': HOLIDAY_REPLACEMENTS.get(h.holiday(), h.holiday()),
             'shabbat': h.shabbos() == h,
         },
     }
@@ -91,9 +101,9 @@ def from_datetime(datetime_str):
             'year': h.year,
             'month': h.month,
             'day': h.day,
-            'fast': h.fast_day(),
-            'festival': h.festival(),
-            'holiday': h.holiday(),
+            'fast': HOLIDAY_REPLACEMENTS.get(h.fast_day(), h.fast_day()),
+            'festival': HOLIDAY_REPLACEMENTS.get(h.festival(), h.festival()),
+            'holiday': HOLIDAY_REPLACEMENTS.get(h.holiday(), h.holiday()),
             'shabbat': h.shabbos() == h,
         },
     }
