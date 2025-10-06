@@ -42,7 +42,7 @@ class Systime:
         day = match.group('day')
         time = match.group('time')
         if year is None or day is None:
-            raise SystimeFromatError()
+            raise SystimeFormatError()
         yearnum = int(year)
         daynum = int(day)
         timenum = None
